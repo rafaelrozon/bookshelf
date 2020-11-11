@@ -1,9 +1,11 @@
 // 🐨 make sure to add the comment and import jsx from @emotion/core
 // up here so you can use the css prop
+/** @jsx jsx */
+import {jsx, css} from '@emotion/core'
 
 // 🐨 let's get a solid reset of global styles so everything looks a bit better
 // In this project we're using bootstrap-reboot which you can import from
-// bootstrap/dist/css/bootstrap-reboot.css
+import "bootstrap/dist/css/bootstrap-reboot.css"
 // 🦉 Note: you can definitely use regular styles to style React apps
 // and using any modern toolchain will allow you to simply import the CSS file
 // but CSS-in-JS is generally easier to maintain.
@@ -12,7 +14,7 @@ import * as React from 'react'
 import ReactDOM from 'react-dom'
 // 🐨 you'll need to import some new components that you'll be creating
 // in this file
-// import {Button, Input, FormGroup} from './components/lib'
+import {Button, Input, FormGroup, Label} from './components/lib'
 import {Modal, ModalContents, ModalOpenButton} from './components/modal'
 import {Logo} from './components/logo'
 
@@ -38,17 +40,35 @@ function LoginForm({onSubmit, submitButton}) {
   //      maxWidth: '300px',
   //    },
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      css={css`
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        > div {
+          margin: 10px auto;
+          width: 100%;
+          max-width: 300px;
+        }
+      `}
+      onSubmit={handleSubmit}
+    >
       {/* 🐨 these div elements could be a FormGroup you create in components/lib */}
       {/* 🐨 and the inputs elements could be custom styled Input components too */}
-      <div>
-        <label htmlFor="username">Username</label>
-        <input id="username" />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input id="password" type="password" />
-      </div>
+      <FormGroup>
+        
+          <Label htmlFor="username">Username</Label>
+          <Input id="username" />
+        
+      </FormGroup>
+      <FormGroup>
+        
+          <Label htmlFor="password">Password</Label>
+          <Input id="password" type="password" />
+        
+      </FormGroup>
+
       <div>{React.cloneElement(submitButton, {type: 'submit'})}</div>
     </form>
   )
@@ -72,7 +92,16 @@ function App() {
   //    width: '100%',
   //    height: '100vh',
   return (
-    <div>
+    <div
+      css={css`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100vh;
+      `}
+    >
       <Logo width="80" height="80" />
       <h1>Bookshelf</h1>
       {/*
@@ -83,26 +112,31 @@ function App() {
             gridGap: '0.75rem',
       */}
       {/* 🐨 And make sure to use the new Button component for all these buttons */}
-      <div>
+      <div 
+        css={css`
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          grid-gap: 0.75rem;
+      `}>
         <Modal>
           <ModalOpenButton>
-            <button variant="primary">Login</button>
+            <Button variant="primary">Login</Button>
           </ModalOpenButton>
           <ModalContents aria-label="Login form" title="Login">
             <LoginForm
               onSubmit={login}
-              submitButton={<button variant="primary">Login</button>}
+              submitButton={<Button variant="primary">Login</Button>}
             />
           </ModalContents>
         </Modal>
         <Modal>
           <ModalOpenButton>
-            <button variant="secondary">Register</button>
+            <Button variant="secondary">Register</Button>
           </ModalOpenButton>
           <ModalContents aria-label="Registration form" title="Register">
             <LoginForm
               onSubmit={register}
-              submitButton={<button variant="secondary">Register</button>}
+              submitButton={<Button variant="secondary">Register</Button>}
             />
           </ModalContents>
         </Modal>

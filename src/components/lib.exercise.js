@@ -29,7 +29,16 @@ import {Dialog as ReachDialog} from '@reach/dialog'
 // Button variant="secondary" (in addition to the above styles)
 //   background: '#f1f2f7',
 //   color: '#434449',
-
+const buttonVariants = {
+  primary: {
+    background: '#3f51b5',
+    color: 'white',
+  },
+  secondary: {
+      background: '#f1f2f7',
+      color: '#434449',
+  },
+}
 // Input
 //   borderRadius: '3px',
 //   border: '1px solid #f1f1f4',
@@ -68,4 +77,40 @@ const Dialog = styled(ReachDialog)({
   },
 })
 
-export {CircleButton, Dialog}
+// const Button = styled.button`
+//   padding: 10px 15px;
+//   border: 0;
+//   line-height: 1;
+//   border-radius: 3px;
+//   background-color: ${props =>
+//     props.variant === 'primary' ? '#3f51b5' : '#f1f2f7'};
+//   color: ${props => (props.variant === 'primary' ? 'white' : '#434449')};
+// `
+
+const Button = styled.button({
+  padding: '10px 15px',
+  border: '0',
+  lineHeight: '1',
+  borderRadius: '3px',
+}, ({ variant = 'primary' }) => buttonVariants[variant])
+
+const Input = styled.input`
+  padding: 8px 12px;
+  line-height: 1;
+  border-radius: 3px;
+  border: 1px solid #f1f1f4;
+  background: #f1f2f7;
+`
+
+const Label = styled.label`
+  margin-bottom: 8px;
+  display: inline-block;
+`
+
+const FormGroup = styled.div`
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+`
+
+export {CircleButton, Dialog, Button, Input, FormGroup, Label}
